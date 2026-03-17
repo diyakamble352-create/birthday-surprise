@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Babe 🤍</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{overflow:hidden;}
+
+.container{
+    display:flex;
+    width:300vw;
+    height:100vh;
+    transition:1s ease;
+}
+
+/* -------- GENERAL PAGE -------- */
+.page{
+    width:100vw;
+    height:100vh;
+    flex-shrink:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    position:relative;
+    overflow:hidden;
+}
+
+/* -------- PAGE 1 -------- */
+.page1{
+    background:linear-gradient(#FFE5B4);
+    text-align:center;
+}
+
+.page1 h1{
+    font-size:40px;
+    color:#FE828C;
+}
+
+.page1 p{
+    margin-top:10px;
+    color:#555;
+}
+
+button{
+    margin-top:30px;
+    padding:10px 25px;
+    border:none;
+    border-radius:25px;
+    background:#ff4d88;
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+}
+button:hover{transform:scale(1.1);}
+
+/* -------- PAGE 2 -------- */
+.page2{
+    background:white;
+    padding:30px;
+}
+
+.page2 h2{
+    margin-bottom:20px;
+    color:#ff4d88;
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:50px;
+    max-width:400px;
+}
+
+.image-box{
+    position:relative;
+    cursor:pointer;
+}
+
+.image-box img{
+    width:150%;
+    height:150%;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+.overlay{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-size:13px;
+    padding:10px;
+    border-radius:12px;
+    opacity:0;
+    transition:.4s;
+}
+
+.image-box.active .overlay{
+    opacity:1;
+}
+
+/* -------- PAGE 3 -------- */
+.page3{
+    background:black;
+    color:white;
+    text-align:center;
+}
+
+.page3 h1{
+    z-index:2;
+}
+
+canvas{
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+/* navigation */
+.nav{
+    position:absolute;
+    bottom:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+<!-- PAGE 1 -->
+<div class="page page1">
+    <h1>Happy Birthday Babe!🤍</h1>
+    <p>Today is all about celebrating you and the joy you bring to my life 🦋</p>
+    <button onclick="nextPage()">Start the Celebration 🎉</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page page2">
+    <h2>Our Beautiful Memories 🤍</h2>
+    <div class="gallery">
+
+        <div class="image-box" onclick="toggle(this)">
+            <img src="diya3.jpeg">
+            <div class="overlay">You are my favorite hello 🤍</div>
+        </div>
+
+        <div class="image-box" onclick="toggle(this)">
+            <img src="diya2.jpeg">
+            <div class="overlay">Life feels better with you 🦋</div>
+        </div>
+
+        <div class="image-box" onclick="toggle(this)">
+            <img src="diya6.jpeg">
+            <div class="overlay">Your smile is my peace 🤍</div>
+        </div>
+
+        <div class="image-box" onclick="toggle(this)">
+            <img src="diya5.jpeg">
+            <div class="overlay">Forever grateful for you 🤍</div>
+        </div>
+
+        <div class="image-box" onclick="toggle(this)">
+            <img src="diya4.jpeg">
+            <div class="overlay">My heart chose you 🦋</div>
+        </div>
+
+        <div class="image-box" onclick="toggle(this)">
+            <img src="diya1.jpeg">
+            <div class="overlay">Happy Birthday my love 🤍🎂</div>
+        </div>
+
+    </div>
+
+    <button class="nav" onclick="nextPage()">Next ➡</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page page3">
+    <canvas id="fireworks"></canvas>
+    <h1>Celebrate You 🎆🤍</h1>
+    <p style="margin-top:15px;max-width:300px;z-index:2;">
+        You deserve all the happiness, love, and success in the world.  
+        I’m so lucky to call you mine.  
+        Happy Birthday ❤️
+    </p>
+</div>
+
+</div>
+
+<script>
+let page=0;
+function nextPage(){
+    page++;
+    document.getElementById("container").style.transform=
+    "translateX(-"+page*100+"vw)";
+}
+
+function toggle(el){
+    el.classList.toggle("active");
+}
+
+/* Real Fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+function createFirework(){
+    let x=Math.random()*canvas.width;
+    let y=Math.random()*canvas.height/2;
+    for(let i=0;i<80;i++){
+        particles.push({
+            x:x,
+            y:y,
+            angle:Math.random()*2*Math.PI,
+            speed:Math.random()*5+2,
+            radius:2,
+            life:100,
+            color:"hsl("+Math.random()*360+",100%,50%)"
+        });
+    }
+}
+
+function animate(){
+    ctx.fillStyle="rgba(0,0,0,0.2)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach((p,index)=>{
+        p.x+=Math.cos(p.angle)*p.speed;
+        p.y+=Math.sin(p.angle)*p.speed;
+        p.life--;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+        ctx.fillStyle=p.color;
+        ctx.fill();
+        if(p.life<=0) particles.splice(index,1);
+    });
+
+    requestAnimationFrame(animate);
+}
+
+setInterval(createFirework,1200);
+animate();
+</script>
+
+</body>
+</html>
